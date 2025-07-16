@@ -1,0 +1,52 @@
+# ワークフローの名前
+name: Build and Deploy Jekyll site
+
+# ワークフローが実行されるタイミング
+on:
+  # mainブランチにpushされた時に実行
+  push:
+    branches: ["main"]
+
+# ワークフローの権限設定
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 実行するジョブ（タスク）
+jobs:
+  # "build" という名前のジョブ
+  build:
+    runs-on: ubuntu-latest # 実行環境
+    steps:
+      - name: 1. コードをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: 2. GitHub Pagesの基本設定
+        uses: actions/configure-pages@v5
+
+      # ここからが重要！
+      - name: 3. RubyとJekyllの環境をセットアップ
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3' # あなたのサイトに合わせたバージョンを指定
+          bundler-cache: true # Gem（プラグインなど）をキャッシュする設定
+
+      - name: 4. Jekyllでサイトをビルド
+        run: bundle exec jekyll build # ビルドコマンドを実行
+
+      - name: 5. ビルド成果物をアップロード
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './_site' # Jekyllのビルド成果物フォルダ
+
+  # "deploy" という名前のジョブ
+  deploy:
+    needs: build # "build"ジョブが成功したら実行
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }} # デプロイ先のURL
+    steps:
+      - name: 6. アーティファクトからデプロイ
+        uses: actions/deploy-pages@v4
