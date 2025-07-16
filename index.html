@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maar - Material Purchase Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+        .form-input, .form-select {
+            display: block;
+            width: 100%;
+            padding-left: 1rem; /* px-4 */
+            padding-right: 1rem;
+            padding-top: 0.625rem; /* py-2.5 */
+            padding-bottom: 0.625rem;
+            background-color: #fff; /* bg-white */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            border-radius: 0.5rem; /* rounded-lg */
+            color: #111827;
+            font-size: 0.875rem; /* sm:text-sm */
+            transition: box-shadow 0.2s;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #14b8a6; /* focus:ring-2 focus:ring-teal-500 */
+            border-color: #14b8a6; /* focus:border-teal-500 */
+        }
+        .form-input::placeholder, .form-select::placeholder {
+            color: #9ca3af; /* placeholder-gray-400 */
+        }
+        .required-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.5rem;
+            height: auto;
+            padding: 0 0.5em;
+            font-size: 12px; /* text-[12px] */
+            font-weight: bold;
+            color: #dc2626 !important; /* text-red-600 */
+            background-color: #fee2e2; /* bg-red-100 */
+            border-radius: 9999px; /* rounded-full */
+            margin-left: 0.5rem; /* ml-2 */
+        }
+        .section-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: bold;
+            color: #1f2937; /* text-gray-800 */
+            padding-bottom: 0.75rem; /* pb-3 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 1px solid #e5e7eb; /* border-b border-gray-200 */
+        }
+        .submit-button:disabled {
+            background-color: #e5e7eb; /* bg-gray-200 */
+            color: #6b7280; /* text-gray-500 */
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="text-gray-900">
+
+    <!-- Header -->
+    <header class="container mx-auto px-6 py-5 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <img src="maar.png" alt="Maar Logo" class="h-8 w-auto" />
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Main Title Section -->
+        <div class="text-center mb-8">
+            <p class="text-teal-600 font-semibold tracking-wide">REGISTRATION</p>
+            <h2 class="text-4xl font-extrabold text-gray-800 mt-1">Material Purchase Request</h2>
+            <!-- Stepper Icons -->
+            <div class="flex justify-center items-center space-x-4 mt-6">
+                <div class="w-12 h-12 rounded-full bg-teal-100 border-2 border-teal-500 flex items-center justify-center text-teal-600">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-300 flex items-center justify-center text-gray-400">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <main class="bg-white max-w-4xl mx-auto p-8 md:p-12 rounded-xl shadow-lg">
+            <form id="sourcingForm" novalidate>
+                
+                <!-- Section 1: Contact Information -->
+                <div class="mb-10">
+                    <h3 class="section-title">Contact Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-6">
+                        <div>
+                            <label for="companyName" class="form-label flex items-center">Company Name <span class="required-tag">Required</span></label>
+                            <input type="text" id="companyName" name="companyName" class="form-input border-2 border-gray-200 w-full"　style="max-width: 100%;" required>
+                        </div>
+                        <div>
+                            <label for="contactName" class="form-label flex items-center">Your Name <span class="required-tag">Required</span></label>
+                            <input type="text" id="contactName" name="contactName" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="email" class="form-label flex items-center">Email Address <span class="required-tag">Required</span></label>
+                            <input type="email" id="email" name="email" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="you@example.com" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="address" class="form-label flex items-center">Shipping Address <span class="required-tag">Required</span></label>
+                            <input type="text" id="address" name="address" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="1-2-3 Marunouchi, Chiyoda-ku, Tokyo" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Material & Purchase Details -->
+                <div class="mb-10">
+                    <h3 class="section-title">Material & Purchase Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6 mt-6">
+                        <div>
+                            <label for="resinName" class="form-label flex items-center ">Resin Name <span class="required-tag">Required</span></label>
+                            <select id="resinName" name="resinName" class="form-select border-2 border-gray-100 w-full" style="max-width: 100%;" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="ABS">ABS</option>
+                                <option value="PP">PP</option>
+                                <option value="LLDPE">LLDPE</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="color" class="form-label flex items-center">Color <span class="required-tag">Required</span></label>
+                            <select id="color" name="color" class="form-select border-2 border-gray-100 w-full" style="max-width: 100%;"required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="Black">Black</option>
+                                <option value="White">White</option>
+                                <option value="Clear">Clear</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="shape" class="form-label flex items-center">Shape <span class="required-tag">Required</span></label>
+                            <select id="shape" name="shape" class="form-select border-2 border-gray-100 w-full" style="max-width: 100%;" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="flake">flake</option>
+                                <option value="pellet">pellet</option>
+                                <option value="scrap">scrap</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6 items-end">
+                            <div>
+                                <label for="quantity" class="form-label flex items-center">Quantity (MT) <span class="required-tag">Required</span></label>
+                                <input type="number" id="quantity" name="quantity" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="e.g., 10" required>
+                            </div>
+                            <div class="pt-2">
+                                <label class="form-label flex items-center">Purchase Type <span class="required-tag">Required</span></label>
+                                <div class="flex items-center space-x-6 h-full mt-2">
+                                    <div class="flex items-center">
+                                        <input id="monthly" name="purchaseType" type="radio" value="Monthly" class="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300" required>
+                                        <label for="monthly" class="ml-2 block text-sm font-medium text-gray-700">Monthly</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="spot" name="purchaseType" type="radio" value="Spot" class="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300">
+                                        <label for="spot" class="ml-2 block text-sm font-medium text-gray-700">Spot</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="price" class="form-label flex items-center">Target Price (USD/MT) </label>
+                                <input type="number" id="price" name="price" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="e.g., 1200">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Other Requirements -->
+                <div>
+                     <h3 class="section-title">Other Requirements</h3>
+                    <label for="otherRequirements" class="form-label sr-only">Other Requirements (Optional)</label>
+                    <textarea id="otherRequirements" name="otherRequirements" rows="4" class="form-input mt-6 border-2 border-gray-100 w-full"　style="max-width: 100%;"" placeholder="Please enter any other specific conditions or requirements."></textarea>
+                </div>
+
+
+                <!-- Terms and Privacy -->
+                <div class="mt-8">
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="terms" name="terms" type="checkbox" class="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded" required>
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label for="terms" class="font-medium text-gray-700">
+                                I agree to the 
+                                <!-- IMPORTANT: Replace '#' with your actual URL for the Terms of Use -->
+                                <a href="#" target="_blank" class="text-teal-600 hover:text-teal-500 underline">Terms of Use</a> 
+                                and 
+                                <!-- IMPORTANT: Replace '#' with your actual URL for the Privacy Policy -->
+                                <a href="#" target="_blank" class="text-teal-600 hover:text-teal-500 underline">Privacy Policy</a>.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-10 pt-6 border-t border-gray-200">
+                    <div class="flex justify-center">
+                        <button type="submit" id="submitBtn" class="submit-button w-full md:w-1/2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-300 shadow-md">
+                            Submit Request
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </main>
+
+        <!-- Success Message Modal -->
+        <div id="successModal" class="fixed inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full hidden z-50 transition-opacity duration-300">
+            <div class="relative top-20 mx-auto p-6 border w-full max-w-md shadow-lg rounded-xl bg-white">
+                <div class="mt-3 text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100">
+                        <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-2xl leading-6 font-bold text-gray-900 mt-4">Submission Successful!</h3>
+                    <div class="mt-3 px-7 py-3">
+                        <p class="text-base text-gray-600">
+                            Thank you for your request. A confirmation email has been sent. We will get back to you shortly.
+                        </p>
+                    </div>
+                    <div class="items-center px-4 py-3">
+                        <button id="closeModal" class="px-4 py-2 bg-teal-600 text-white text-base font-medium rounded-lg w-full shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 mb-8 text-sm text-gray-500">
+            <p>&copy; 2025 TBM Co., Ltd. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('sourcingForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successModal = document.getElementById('successModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            const requiredInputs = form.querySelectorAll('[required]');
+
+            function checkFormValidity() {
+                const isValid = form.checkValidity();
+                submitBtn.disabled = !isValid;
+            }
+
+            requiredInputs.forEach(input => {
+                input.addEventListener('input', checkFormValidity);
+                input.addEventListener('change', checkFormValidity);
+            });
+            
+            checkFormValidity(); // Initial check
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); 
+                if (!form.checkValidity()) {
+                    return;
+                }
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                // GASのWeb APIエンドポイント
+                const sheetApiUrl = "https://script.google.com/macros/s/AKfycbyOL1xkZEH_x7he33l-ZwoF_VfHFA-csLYozVzZaCzEPoi-ydjv9pgTADbi-MazV_ZbfA/exec";
+                fetch(sheetApiUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // 送信後のモーダル表示などはそのまま
+                successModal.classList.remove('hidden');
+            });
+
+            function closeModal() {
+                 successModal.classList.add('hidden');
+                 form.reset();
+                 checkFormValidity();
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+
+            window.addEventListener('click', function(event) {
+                if (event.target == successModal) {
+                   closeModal();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
