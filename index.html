@@ -67,6 +67,59 @@
             color: #6b7280; /* text-gray-500 */
             cursor: not-allowed;
         }
+        /* カスタムセレクト用CSS */
+        .custom-select {
+          position: relative;
+          width: 100%;
+          font-size: 1.1rem;
+        }
+        .custom-select .selected {
+          background: #fff;
+          border: 1px solid #d1d5db; /* 他の入力と同じ色 */
+          border-radius: 0.5rem; /* rounded-lg */
+          padding: 0.625rem 1rem; /* py-2.5 px-4 */
+          cursor: pointer;
+          min-height: 44px; /* .form-inputと同じ高さ */
+          font-size: 0.875rem; /* sm:text-sm */
+        }
+        .custom-select .select-list {
+          position: absolute;
+          top: 110%;
+          left: 0;
+          right: 0;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          max-height: 0;
+          overflow-y: auto;
+          opacity: 0;
+          transition: max-height 0.3s cubic-bezier(.4,0,.2,1), opacity 0.2s;
+          z-index: 10;
+          padding: 0;
+          margin: 0;
+          list-style: none;
+        }
+        .custom-select.open .select-list {
+          max-height: 400px;
+          opacity: 1;
+          transition: max-height 0.3s cubic-bezier(.4,0,.2,1), opacity 0.2s;
+        }
+        .custom-select .select-list li {
+          padding: 1rem;
+          cursor: pointer;
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .custom-select .select-list li:last-child {
+          border-bottom: none;
+        }
+        .custom-select .select-list li:hover {
+          background: #f0fdfa;
+        }
+        .custom-select .selected:focus, .custom-select.open .selected {
+          border-color: #14b8a6;
+          box-shadow: 0 0 0 2px #14b8a6;
+          outline: none;
+        }
     </style>
 </head>
 <body class="text-gray-900">
@@ -104,19 +157,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-6">
                         <div>
                             <label for="companyName" class="form-label flex items-center">Company Name <span class="required-tag">Required</span></label>
-                            <input type="text" id="companyName" name="companyName" class="form-input border-2 border-gray-200 w-full"　style="max-width: 100%;" required>
+                            <input type="text" id="companyName" name="companyName" class="form-input"　style="max-width: 100%;" required>
                         </div>
                         <div>
                             <label for="contactName" class="form-label flex items-center">Your Name <span class="required-tag">Required</span></label>
-                            <input type="text" id="contactName" name="contactName" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" required>
+                            <input type="text" id="contactName" name="contactName" class="form-input"　style="max-width: 100%;" required>
                         </div>
                         <div class="md:col-span-2">
                             <label for="email" class="form-label flex items-center">Email Address <span class="required-tag">Required</span></label>
-                            <input type="email" id="email" name="email" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="you@example.com" required>
+                            <input type="email" id="email" name="email" class="form-input"　style="max-width: 100%;" placeholder="you@example.com" required>
                         </div>
                         <div class="md:col-span-2">
                             <label for="address" class="form-label flex items-center">Shipping Address <span class="required-tag">Required</span></label>
-                            <input type="text" id="address" name="address" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="1-2-3 Marunouchi, Chiyoda-ku, Tokyo" required>
+                            <input type="text" id="address" name="address" class="form-input"　style="max-width: 100%;" placeholder="1-2-3 Marunouchi, Chiyoda-ku, Tokyo" required>
                         </div>
                     </div>
                 </div>
@@ -125,37 +178,47 @@
                 <div class="mb-10">
                     <h3 class="section-title">Material & Purchase Details</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6 mt-6">
+                        <!-- Resin Name カスタムセレクト -->
                         <div>
-                            <label for="resinName" class="form-label flex items-center ">Resin Name <span class="required-tag">Required</span></label>
-                            <select id="resinName" name="resinName" class="form-select border-2 border-gray-100 w-full" style="max-width: 100%;" required>
-                                <option value="" disabled selected>Please select</option>
-                                <option value="ABS">ABS</option>
-                                <option value="PP">PP</option>
-                                <option value="LLDPE">LLDPE</option>
-                            </select>
+                          <label class="form-label flex items-center">Resin Name <span class="required-tag">Required</span></label>
+                          <div class="custom-select" id="resinNameSelect">
+                            <div class="selected">Please select</div>
+                            <ul class="select-list">
+                              <li>ABS</li><li>AES</li><li>A-PET</li><li>AS</li><li>ASA</li><li>COC</li><li>COP</li><li>CTFE</li><li>EFEP</li><li>EMAA</li><li>EPE</li><li>EPS</li><li>ETFE</li><li>EVA</li><li>F</li><li>FEP</li><li>GPPS</li><li>HDPE</li><li>HIPS</li><li>LCP</li><li>LDPE</li><li>LLDPE</li><li>MDPE</li><li>MIX</li><li>M-LLDPE</li><li>MXDPA</li><li>OTHER</li><li>OPS</li><li>PA</li><li>PA12</li><li>PA46</li><li>PA6</li><li>PA66</li><li>PA6T</li><li>PA9T</li><li>PAR</li><li>PBT</li><li>PC</li><li>PC/ABS</li><li>PCT</li><li>PE</li><li>PEEK</li><li>PEI</li><li>PEN</li><li>PES</li><li>PET</li><li>PET-G</li><li>PFA</li><li>PMMA</li><li>POM</li><li>PP</li><li>PP/PE</li><li>PP/PS</li><li>PPA</li><li>PPE</li><li>PPO</li><li>PPS</li><li>PS</li><li>PSF</li><li>PSP</li><li>PTFE</li><li>PVA</li><li>PVB</li><li>PBV</li><li>PVDC</li><li>SAN</li><li>SI</li><li>TPE</li><li>TPO</li><li>TPU</li><li>UHMWPE</li>
+                            </ul>
+                            <input type="hidden" name="resinName" required>
+                          </div>
+                        </div>
+                        <!-- Color カスタムセレクト -->
+                        <div>
+                          <label class="form-label flex items-center">Color <span class="required-tag">Required</span></label>
+                          <div class="custom-select" id="colorSelect">
+                            <div class="selected">Please select</div>
+                            <ul class="select-list">
+                              <li>NC_natural color</li><li>MC_mix color</li><li>MO_monochromatic</li><li>LC_light color</li><li>WH_white</li><li>MW_milk white</li><li>BK_black</li><li>OR_orange</li><li>NW_natural white</li><li>BL_blue</li><li>YL_yellow</li><li>BR_brawn</li><li>IV_ivory</li><li>RD_red</li><li>GR_gray</li><li>OH_other</li>
+                            </ul>
+                            <input type="hidden" name="color" required>
+                          </div>
+                        </div>
+                        <!-- Shape カスタムセレクト -->
+                        <div>
+                          <label class="form-label flex items-center">Shape <span class="required-tag">Required</span></label>
+                          <div class="custom-select" id="shapeSelect">
+                            <div class="selected">Please select</div>
+                            <ul class="select-list">
+                              <li>pellet</li><li>flake</li><li>glash</li><li>bale</li><li>ingot</li><li>scrap</li><li>role</li><li>powder</li><li>other</li>
+                            </ul>
+                            <input type="hidden" name="shape" required>
+                          </div>
                         </div>
                         <div>
-                            <label for="color" class="form-label flex items-center">Color <span class="required-tag">Required</span></label>
-                            <select id="color" name="color" class="form-select border-2 border-gray-100 w-full" style="max-width: 100%;"required>
-                                <option value="" disabled selected>Please select</option>
-                                <option value="Black">Black</option>
-                                <option value="White">White</option>
-                                <option value="Clear">Clear</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="shape" class="form-label flex items-center">Shape <span class="required-tag">Required</span></label>
-                            <select id="shape" name="shape" class="form-select border-2 border-gray-100 w-full" style="max-width: 100%;" required>
-                                <option value="" disabled selected>Please select</option>
-                                <option value="flake">flake</option>
-                                <option value="pellet">pellet</option>
-                                <option value="scrap">scrap</option>
-                            </select>
+                            <label for="application" class="form-label flex items-center">Application <span class="required-tag">Required</span></label>
+                            <input type="text" id="application" name="application" class="form-input" style="max-width: 100%;" placeholder="e.g., Automotive parts, Packaging, etc." required>
                         </div>
                         <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6 items-end">
                             <div>
                                 <label for="quantity" class="form-label flex items-center">Quantity (MT) <span class="required-tag">Required</span></label>
-                                <input type="number" id="quantity" name="quantity" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="e.g., 10" required>
+                                <input type="number" id="quantity" name="quantity"  class="form-input"　style="max-width: 100%;" placeholder="e.g., 10" required>
                             </div>
                             <div class="pt-2">
                                 <label class="form-label flex items-center">Purchase Type <span class="required-tag">Required</span></label>
@@ -172,7 +235,7 @@
                             </div>
                             <div>
                                 <label for="price" class="form-label flex items-center">Target Price (USD/MT) </label>
-                                <input type="number" id="price" name="price" class="form-input border-2 border-gray-100 w-full"　style="max-width: 100%;" placeholder="e.g., 1200">
+                                <input type="number" id="price" name="price" class="form-input"　style="max-width: 100%;" placeholder="e.g., 1200">
                             </div>
                         </div>
                     </div>
@@ -182,7 +245,7 @@
                 <div>
                      <h3 class="section-title">Other Requirements</h3>
                     <label for="otherRequirements" class="form-label sr-only">Other Requirements (Optional)</label>
-                    <textarea id="otherRequirements" name="otherRequirements" rows="4" class="form-input mt-6 border-2 border-gray-100 w-full"　style="max-width: 100%;"" placeholder="Please enter any other specific conditions or requirements."></textarea>
+                    <textarea id="otherRequirements" name="otherRequirements" rows="4"class="form-input"　style="max-width: 100%;"" placeholder="Please enter any other specific conditions or requirements."></textarea>
                 </div>
 
 
@@ -302,6 +365,31 @@
                 }
             });
         });
+    </script>
+
+    <!-- カスタムセレクト用JS -->
+    <script>
+    document.querySelectorAll('.custom-select').forEach(function(select) {
+      const selected = select.querySelector('.selected');
+      const list = select.querySelector('.select-list');
+      const hidden = select.querySelector('input[type=hidden]');
+      select.addEventListener('click', function(e) {
+        select.classList.toggle('open');
+      });
+      list.querySelectorAll('li').forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          selected.textContent = item.textContent;
+          hidden.value = item.textContent;
+          select.classList.remove('open');
+          e.stopPropagation();
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!select.contains(e.target)) {
+          select.classList.remove('open');
+        }
+      });
+    });
     </script>
 
 </body>
