@@ -74,6 +74,24 @@
           font-size: 1.1rem;
         }
         .custom-select .selected {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .custom-select .arrow {
+          margin-left: 8px;
+          font-size: 1.2em;
+          pointer-events: none;
+        }
+        .custom-select .search-input {
+          width: 100%;
+          border: none;
+          outline: none;
+          font-size: 0.95em;
+          padding: 0.2em 0;
+          background: transparent;
+        }
+        .custom-select .selected {
           background: #fff;
           border: 1px solid #d1d5db; /* 他の入力と同じ色 */
           border-radius: 0.5rem; /* rounded-lg */
@@ -182,7 +200,11 @@
                         <div>
                           <label class="form-label flex items-center">Resin Name <span class="required-tag">Required</span></label>
                           <div class="custom-select" id="resinNameSelect">
-                            <div class="selected">Please select　▼</div>
+                            <div class="selected" tabindex="0">
+                              <span class="selected-text">Please select</span>
+                              <span class="arrow">▼</span>
+                            </div>
+                            <input class="search-input" type="text" placeholder="Search..." style="display:none;" />
                             <ul class="select-list">
                               <li>ABS</li><li>AES</li><li>A-PET</li><li>AS</li><li>ASA</li><li>COC</li><li>COP</li><li>CTFE</li><li>EFEP</li><li>EMAA</li><li>EPE</li><li>EPS</li><li>ETFE</li><li>EVA</li><li>F</li><li>FEP</li><li>GPPS</li><li>HDPE</li><li>HIPS</li><li>LCP</li><li>LDPE</li><li>LLDPE</li><li>MDPE</li><li>MIX</li><li>M-LLDPE</li><li>MXDPA</li><li>OTHER</li><li>OPS</li><li>PA</li><li>PA12</li><li>PA46</li><li>PA6</li><li>PA66</li><li>PA6T</li><li>PA9T</li><li>PAR</li><li>PBT</li><li>PC</li><li>PC/ABS</li><li>PCT</li><li>PE</li><li>PEEK</li><li>PEI</li><li>PEN</li><li>PES</li><li>PET</li><li>PET-G</li><li>PFA</li><li>PMMA</li><li>POM</li><li>PP</li><li>PP/PE</li><li>PP/PS</li><li>PPA</li><li>PPE</li><li>PPO</li><li>PPS</li><li>PS</li><li>PSF</li><li>PSP</li><li>PTFE</li><li>PVA</li><li>PVB</li><li>PBV</li><li>PVDC</li><li>SAN</li><li>SI</li><li>TPE</li><li>TPO</li><li>TPU</li><li>UHMWPE</li>
                             </ul>
@@ -193,7 +215,11 @@
                         <div>
                           <label class="form-label flex items-center">Color <span class="required-tag">Required</span></label>
                           <div class="custom-select" id="colorSelect">
-                            <div class="selected">Please select　▼</div>
+                            <div class="selected" tabindex="0">
+                              <span class="selected-text">Please select</span>
+                              <span class="arrow">▼</span>
+                            </div>
+                            <input class="search-input" type="text" placeholder="Search..." style="display:none;" />
                             <ul class="select-list">
                               <li>NC_natural color</li><li>MC_mix color</li><li>MO_monochromatic</li><li>LC_light color</li><li>WH_white</li><li>MW_milk white</li><li>BK_black</li><li>OR_orange</li><li>NW_natural white</li><li>BL_blue</li><li>YL_yellow</li><li>BR_brawn</li><li>IV_ivory</li><li>RD_red</li><li>GR_gray</li><li>OH_other</li>
                             </ul>
@@ -204,7 +230,11 @@
                         <div>
                           <label class="form-label flex items-center">Shape <span class="required-tag">Required</span></label>
                           <div class="custom-select" id="shapeSelect">
-                            <div class="selected">Please select   ▼</div>
+                            <div class="selected" tabindex="0">
+                              <span class="selected-text">Please select</span>
+                              <span class="arrow">▼</span>
+                            </div>
+                            <input class="search-input" type="text" placeholder="Search..." style="display:none;" />
                             <ul class="select-list">
                               <li>pellet</li><li>flake</li><li>glash</li><li>bale</li><li>ingot</li><li>scrap</li><li>role</li><li>powder</li><li>other</li>
                             </ul>
@@ -367,27 +397,62 @@
         });
     </script>
 
-    <!-- カスタムセレクト用JS -->
+    <!-- カスタムセレクト用JS（検索・アイコン切替対応） -->
     <script>
     document.querySelectorAll('.custom-select').forEach(function(select) {
       const selected = select.querySelector('.selected');
+      const selectedText = select.querySelector('.selected-text');
+      const arrow = select.querySelector('.arrow');
       const list = select.querySelector('.select-list');
       const hidden = select.querySelector('input[type=hidden]');
-      select.addEventListener('click', function(e) {
+      const searchInput = select.querySelector('.search-input');
+
+      // 展開・閉じる
+      selected.addEventListener('click', function(e) {
         select.classList.toggle('open');
+        if (select.classList.contains('open')) {
+          arrow.textContent = '▲';
+          searchInput.style.display = '';
+          searchInput.value = '';
+          filterOptions('');
+          searchInput.focus();
+        } else {
+          arrow.textContent = '▼';
+          searchInput.style.display = 'none';
+        }
       });
-      list.querySelectorAll('li').forEach(function(item) {
-        item.addEventListener('click', function(e) {
-          selected.textContent = item.textContent;
-          hidden.value = item.textContent;
-          select.classList.remove('open');
-          e.stopPropagation();
-        });
-      });
+      // フォーカスアウトで閉じる
       document.addEventListener('click', function(e) {
         if (!select.contains(e.target)) {
           select.classList.remove('open');
+          arrow.textContent = '▼';
+          searchInput.style.display = 'none';
         }
+      });
+      // 選択肢クリック
+      list.querySelectorAll('li').forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          selectedText.textContent = item.textContent;
+          hidden.value = item.textContent;
+          select.classList.remove('open');
+          arrow.textContent = '▼';
+          searchInput.style.display = 'none';
+          e.stopPropagation();
+        });
+      });
+      // 入力で絞り込み
+      function filterOptions(keyword) {
+        const lower = keyword.toLowerCase();
+        list.querySelectorAll('li').forEach(function(item) {
+          if (item.textContent.toLowerCase().includes(lower)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+      searchInput.addEventListener('input', function(e) {
+        filterOptions(searchInput.value);
       });
     });
     </script>
